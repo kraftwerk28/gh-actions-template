@@ -23,6 +23,6 @@ jobs:
         echo "${{ secrets.SSH_PRIV_KEY }}" >> ~/.ssh/id_rsa
     - name: Lmao ssh lol
       run: |
-        ssh -t "kraftwerk28@kraftwerk28.pp.ua" "ls"
+        ssh "kraftwerk28@kraftwerk28.pp.ua" "ls"
 #       run: |
 #         docker -H "ssh://kraftwerk28@kraftwerk28.pp.ua" ps
