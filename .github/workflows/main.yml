@@ -7,10 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Update system
+      - name: Install packages
         run: |
-          sudo apt-get update && sudo apt upgrade
-          sudo apt-get install -y docker-compose
+          echo "$PATH"
+          curl \
+            -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" \
+            -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
       - name: Setup ssh client
         run: |
           mkdir -p ~/.ssh/
@@ -20,11 +24,10 @@ jobs:
       - name: Build image
         run: |
           docker login -u "kraftwerk28" -p "${{ secrets.DOCKER_PASS }}"
-          PORT=1495 docker-compose build
+          docker-compose build
           docker-compose push
       - name: Deploy on server
         run: |
-          docker-compose --version
           export DOCKER_HOST="ssh://kraftwerk28@kraftwerk28.pp.ua"
           docker-compose pull
           PORT=1495 docker-compose up -d
