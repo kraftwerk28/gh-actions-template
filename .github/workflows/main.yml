@@ -13,13 +13,12 @@ jobs:
         mkdir -p ~/.ssh/
         echo "${{ secrets.SSH_PRIV_KEY }}" >> ~/.ssh/id_rsa
         chmod 400 ~/.ssh/id_rsa
-        ssh "kraftwerk28@kraftwerk28.pp.ua" "ls"
-        ssh "kraftwerk28@kraftwerk28.pp.ua" "ls -lhs"
-#     - name: Build image
-#       run: |
-#         docker-compose build
-#         docker-compose push
-#     - name: Deploy on server
-#       run: |
-#         docker-compose -H "ssh://kraftwerk28.pp.ua" pull
-#         docker-compose -H "ssh://kraftwerk28.pp.ua" up -d
+        ssh -o StrictHostKeyChecking=no "kraftwerk28@kraftwerk28.pp.ua" "ls"
+    - name: Build image
+      run: |
+        docker-compose build
+        docker-compose push
+    - name: Deploy on server
+      run: |
+        docker-compose -H "ssh://kraftwerk28.pp.ua" pull
+        PORT=1495 docker-compose -H "ssh://kraftwerk28.pp.ua" up -d

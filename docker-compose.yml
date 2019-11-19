@@ -1,6 +1,7 @@
 version: '3'
 services:
   app:
+    image: 'kraftwerk28/node-docker'
     build: ./
     ports:
-      - '1495:8080'
+      - '${PORT}:8080'
