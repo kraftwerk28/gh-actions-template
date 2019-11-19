@@ -8,18 +8,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-#     - uses: webfactory/ssh-agent@v0.1.1
-#       with:
-#         ssh-private-key: ${{ secrets.SSH_PRIV_KEY }}
-#     - name: Run a one-line script
-#       run: echo Hello, world!
-#     - name: Run a multi-line script
-#       run: |
-#         echo Add other actions to build,
-#         echo test, and deploy your project.
     - name: Setup ssh client
       run: |
         mkdir -p ~/.ssh/
         echo "${{ secrets.SSH_PRIV_KEY }}" >> ~/.ssh/id_rsa
         chmod 400 ~/.ssh/id_rsa
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa "kraftwerk28@kraftwerk28.pp.ua" "ls"
+        ssh -o StrictHostKeyChecking=no "kraftwerk28@kraftwerk28.pp.ua" "ls"
+        ssh -i ~/.ssh/id_rsa "kraftwerk28@kraftwerk28.pp.ua" "ls -lhs"
+#     - name: Build image
+#       run: |
+#         docker-compose build
+#         docker-compose push
+#     - name: Deploy on server
+#       run: |
+#         docker-compose -H "ssh://kraftwerk28.pp.ua" pull
+#         docker-compose -H "ssh://kraftwerk28.pp.ua" up -d
