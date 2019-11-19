@@ -10,24 +10,22 @@ jobs:
       - name: Install packages
         run: |
           echo "$PATH"
-          curl \
-            -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" \
-            -o /usr/local/bin/docker-compose
-          chmod +x /usr/local/bin/docker-compose
-          docker-compose --version
-      - name: Setup ssh client
-        run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.SSH_PRIV_KEY }}" >> ~/.ssh/id_rsa
-          chmod 400 ~/.ssh/id_rsa
-          ssh -o StrictHostKeyChecking=no "kraftwerk28@kraftwerk28.pp.ua" "ls"
-      - name: Build image
-        run: |
-          docker login -u "kraftwerk28" -p "${{ secrets.DOCKER_PASS }}"
-          docker-compose build
-          docker-compose push
-      - name: Deploy on server
-        run: |
-          export DOCKER_HOST="ssh://kraftwerk28@kraftwerk28.pp.ua"
-          docker-compose pull
-          PORT=1495 docker-compose up -d
+          #curl \
+          #  -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" \
+          #  -o /usr/local/bin/docker-compose
+#       - name: Setup ssh client
+#         run: |
+#           mkdir -p ~/.ssh/
+#           echo "${{ secrets.SSH_PRIV_KEY }}" >> ~/.ssh/id_rsa
+#           chmod 400 ~/.ssh/id_rsa
+#           ssh -o StrictHostKeyChecking=no "kraftwerk28@kraftwerk28.pp.ua" "ls"
+#       - name: Build image
+#         run: |
+#           docker login -u "kraftwerk28" -p "${{ secrets.DOCKER_PASS }}"
+#           docker-compose build
+#           docker-compose push
+#       - name: Deploy on server
+#         run: |
+#           export DOCKER_HOST="ssh://kraftwerk28@kraftwerk28.pp.ua"
+#           docker-compose pull
+#           PORT=1495 docker-compose up -d
