@@ -7,7 +7,7 @@ env:
   USER: ${{ secrets.USER }}
   SSHURL: "ssh://$USER@$HOST"
   SSH_PK: ${{ secrets.SSH_PRIV_KEY }}
-  DOCKER_USER: $USER
+  DOCKER_USER: ${{ secrets.USER }}
   DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
 jobs:
   build:
