@@ -5,7 +5,6 @@ on: [push]
 env:
   HOST: ${{ secrets.HOST }}
   USER: ${{ secrets.USER }}
-  SSHURL: "ssh://$USER@$HOST"
   SSH_PK: ${{ secrets.SSH_PRIV_KEY }}
   DOCKER_USER: ${{ secrets.USER }}
   DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
@@ -34,5 +33,6 @@ jobs:
           docker-compose push
       - name: Deploy on server
         run: |
-          docker-compose -H $SSHURL pull
-          PORT=1495 docker-compose -H $SSHURL up -d
+          export DOCKER_HOST="ssh://$USER@$HOST"
+          docker-compose pull
+          PORT=1495 docker-compose up -d
