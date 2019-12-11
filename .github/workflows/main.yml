@@ -16,8 +16,10 @@ jobs:
       - name: Check env
         env:
           KEK_LOL: 123123
+          COMPLEX: "ssh://$USER@$HOST"
         run: |
-          echo "$KEK_LOL"
+          echo $KEK_LOL
+          echo "$COMPLEX"
 #       - name: Install packages
 #         run: |
 #           sudo mkdir -p "/usr/local/bin/docker"
