@@ -16,7 +16,7 @@ jobs:
       - name: Check env
         env:
           KEK_LOL: 123123
-          COMPLEX: "ssh://$USER@$HOST"
+          COMPLEX: "ssh://{{ env.USER }}@{{ env.HOST }}"
         run: |
           echo $KEK_LOL
           echo "$COMPLEX"
