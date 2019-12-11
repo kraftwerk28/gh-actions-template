@@ -13,26 +13,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Install packages
+      - name: Check env
+        env:
+          KEK_LOL: 123123
         run: |
-          sudo mkdir -p "/usr/local/bin/docker"
-          sudo curl \
-            -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" \
-            -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-      - name: Setup ssh client
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PK" >> ~/.ssh/id_rsa
-          chmod 400 ~/.ssh/id_rsa
-          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
-      - name: Build image
-        run: |
-          docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
-          docker-compose build
-          docker-compose push
-      - name: Deploy on server
-        run: |
-          export DOCKER_HOST="ssh://$USER@$HOST"
-          docker-compose pull
-          PORT=1495 docker-compose up -d
+          echo "$KEK_LOL"
+#       - name: Install packages
+#         run: |
+#           sudo mkdir -p "/usr/local/bin/docker"
+#           sudo curl \
+#             -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" \
+#             -o /usr/local/bin/docker-compose
+#           sudo chmod +x /usr/local/bin/docker-compose
+#       - name: Setup ssh client
+#         run: |
+#           mkdir -p ~/.ssh/
+#           echo "$SSH_PK" >> ~/.ssh/id_rsa
+#           chmod 400 ~/.ssh/id_rsa
+#           ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
+#       - name: Build image
+#         run: |
+#           docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+#           docker-compose build
+#           docker-compose push
+#       - name: Deploy on server
+#         run: |
+#           export DOCKER_HOST="ssh://$USER@$HOST"
+#           docker-compose pull
+#           PORT=1495 docker-compose up -d
